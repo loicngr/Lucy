@@ -37,4 +37,20 @@ class Utils
         }
         return htmlspecialchars(strip_tags($str), ENT_QUOTES, 'UTF-8');
     }
+
+    static public function getTags($str, $charDelimiter = '#')
+    {
+        if (strpos($str, $charDelimiter) == false) return false;
+
+        $tags = [];
+        $strSplit = explode(' ', $str);
+
+        foreach ($strSplit as $word) {
+            if (strpos($word, $charDelimiter) !== false) {
+                $tags[] = $word;
+            }
+        }
+
+        return $tags;
+    }
 }
