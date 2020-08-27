@@ -7,7 +7,5 @@
 
     echo '<pre>';
 
-    var_dump($appClass->ItemsWithTagsRoom(1));
-    
     echo '</pre>';
 ?>

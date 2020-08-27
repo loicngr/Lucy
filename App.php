@@ -50,4 +50,14 @@ class App extends Model
         return $itemsWithTags;
     }
 
+    public function addItem($roomId,$itemContent)
+    {
+        return $this->addItemContent($roomId,$itemContent);
+    }
+
+    public function addRomm($roomName,$password)
+    {
+        $roomPassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->addRoomNamePass($roomName,$roomPassword);
+    }
 }
