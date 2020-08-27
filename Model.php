@@ -2,6 +2,11 @@
 
 class Model
 {
+    /**
+     * Undocumented variable
+     *
+     * @var PDO $_PDO
+     */
     private $_PDO;
 
     public function __construct()
@@ -30,10 +35,64 @@ class Model
         }
     }
 
-
-    protected function getRooms()
+    protected function getItemsByRoomId($roomId)
     {
+        $sql = "SELECT item.ID_item,content, item.date FROM `item` 
+                INNER JOIN room ON item.ID_room = room.ID_room
+                WHERE room.ID_room = :id";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":id",$roomId);
+        $step->execute();
 
-        echo "ok";
+        return $step->fetchAll();
+    }
+
+    protected function getTagsByItemId($itemId)
+    {
+        $sql = "SELECT tag.tag_name FROM `item` 
+                INNER JOIN assoc ON item.ID_item = assoc.ID_item
+                INNER JOIN tag ON assoc.ID_tag = tag.ID_tag
+                WHERE item.ID_item = :id";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":id",$itemId);
+        $step->execute();
+
+        return $step->fetchAll();
+    }
+
+    protected function getRoomById($roomId)
+    {
+        $sql = "SELECT ID_room, room.name FROM `room` 
+                WHERE room.ID_room = :id";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":id",$roomId);
+        $step->execute();
+
+        return $step->fetchAll();
+    }
+
+    protected function getPassByRoomId($roomId)
+    {
+        $sql = "SELECT room.password FROM `room` 
+                WHERE room.ID_room = :id";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":id",$roomId);
+        $step->execute();
+
+        return $step->fetch();
+    }
+
+    protected function getItemsWithTagsByRoomId($roomId)
+    {
+        $sql = "SELECT item.ID_item,content, item.date, tag.tag_name FROM `item` 
+                INNER JOIN room ON item.ID_room = room.ID_room
+                INNER JOIN assoc ON item.ID_item = assoc.ID_item
+                INNER JOIN tag ON assoc.ID_tag = tag.ID_tag
+                WHERE room.ID_room = :id";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":id",$roomId);
+        $step->execute();
+
+        return $step->fetchAll();
     }
 }

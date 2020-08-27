@@ -5,6 +5,9 @@
 
     $appClass = new App();
 
-    $appClass->test();
+    echo '<pre>';
 
+    var_dump($appClass->ItemsWithTagsRoom(1));
+    
+    echo '</pre>';
 ?>
