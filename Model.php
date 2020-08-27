@@ -37,7 +37,7 @@ class Model
 
     protected function getItemsByRoomId($roomId)
     {
-        $sql = "SELECT item.ID_item,content, item.date FROM `item` 
+        $sql = "SELECT item.ID_item,content, item.date FROM item 
                 INNER JOIN room ON item.ID_room = room.ID_room
                 WHERE room.ID_room = :id";
         $step = $this->_PDO->prepare($sql);
@@ -49,7 +49,7 @@ class Model
 
     protected function getTagsByItemId($itemId)
     {
-        $sql = "SELECT tag.tag_name FROM `item` 
+        $sql = "SELECT tag.tag_name FROM item 
                 INNER JOIN assoc ON item.ID_item = assoc.ID_item
                 INNER JOIN tag ON assoc.ID_tag = tag.ID_tag
                 WHERE item.ID_item = :id";
@@ -62,7 +62,7 @@ class Model
 
     protected function getRoomById($roomId)
     {
-        $sql = "SELECT ID_room, room.name FROM `room` 
+        $sql = "SELECT ID_room, room.name FROM room 
                 WHERE room.ID_room = :id";
         $step = $this->_PDO->prepare($sql);
         $step->bindParam(":id",$roomId);
@@ -73,7 +73,7 @@ class Model
 
     protected function getPassByRoomId($roomId)
     {
-        $sql = "SELECT room.password FROM `room` 
+        $sql = "SELECT room.password FROM room 
                 WHERE room.ID_room = :id";
         $step = $this->_PDO->prepare($sql);
         $step->bindParam(":id",$roomId);
@@ -84,7 +84,7 @@ class Model
 
     protected function getItemsWithTagsByRoomId($roomId)
     {
-        $sql = "SELECT item.ID_item,content, item.date, tag.tag_name FROM `item` 
+        $sql = "SELECT item.ID_item,content, item.date, tag.tag_name FROM item 
                 INNER JOIN room ON item.ID_room = room.ID_room
                 INNER JOIN assoc ON item.ID_item = assoc.ID_item
                 INNER JOIN tag ON assoc.ID_tag = tag.ID_tag
@@ -94,5 +94,33 @@ class Model
         $step->execute();
 
         return $step->fetchAll();
+    }
+
+    protected function addItemContent($roomId,$itemContent)
+    {
+        $sql = "INSERT INTO item(ID_room, content, item.date) VALUES (:id,:room,NOW())";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":id",$roomId);
+        $step->bindParam(":room",$itemContent);
+        $step->execute();
+
+        $isValid = $step->rowCount();
+
+        if ($isValid) return true;
+        return false;
+    }
+
+    protected function addRoomNamePass($roomName,$roomPassword)
+    {
+        $sql = "INSERT INTO `room`(`name`, `password`) VALUES (:roomName,:roomPassword)";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":roomName",$roomName);
+        $step->bindParam(":roomPassword",$roomPassword);
+        $step->execute();
+
+        $isValid = $step->rowCount();
+
+        if ($isValid) return true;
+        return false;
     }
 }
