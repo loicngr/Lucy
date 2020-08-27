@@ -68,7 +68,18 @@ class Model
         $step->bindParam(":id",$roomId);
         $step->execute();
 
-        return $step->fetchAll();
+        return $step->fetch();
+    }
+
+    protected function getRoomByName($roomName)
+    {
+        $sql = "SELECT ID_room FROM room 
+                WHERE room.name = :name";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":name",$roomName);
+        $step->execute();
+
+        return $step->fetch();
     }
 
     protected function getPassByRoomId($roomId)

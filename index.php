@@ -1,3 +1,14 @@
+<?php
+    if(!empty($_POST) && isset($_POST["roomName"]) && isset($_POST["roomPassword"])){
+        $roomName = $_POST["roomName"];
+        $roomPassword = $_POST["roomPassword"];
+
+        require_once 'App.php';
+
+        $appClass = new App;
+        $appClass->addRomm($roomName,$roomPassword);
+    }
+?>
 <!doctype html>
 <html lang="en">
 <head>

@@ -15,9 +15,9 @@ class App extends Model
         return $this->getTagsByItemId($itemId);
     }
 
-    public function Room($roomId)
+    public function room($roomName)
     {
-        return $this->getRoomById($roomId);
+        return $this->getRoomByName($roomName);
     }
 
     public function passwordVerify($password, $roomId)
