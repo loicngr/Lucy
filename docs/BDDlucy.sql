@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Jeu 27 Août 2020 à 09:57
+-- Généré le :  Jeu 27 Août 2020 à 10:43
 -- Version du serveur :  5.7.31-0ubuntu0.18.04.1
 -- Version de PHP :  7.2.33-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -45,6 +45,13 @@ CREATE TABLE `item` (
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Contenu de la table `item`
+--
+
+INSERT INTO `item` (`ID_item`, `ID_room`, `content`, `date`) VALUES
+(1, 1, 'wow trop bien !!', '2020-08-27 10:42:00');
+
 -- --------------------------------------------------------
 
 --
@@ -56,6 +63,13 @@ CREATE TABLE `room` (
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Contenu de la table `room`
+--
+
+INSERT INTO `room` (`ID_room`, `name`, `password`) VALUES
+(1, 'rom test', 'mdp');
 
 -- --------------------------------------------------------
 
@@ -113,12 +127,12 @@ ALTER TABLE `assoc`
 -- AUTO_INCREMENT pour la table `item`
 --
 ALTER TABLE `item`
-  MODIFY `ID_item` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `room`
 --
 ALTER TABLE `room`
-  MODIFY `ID_room` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_room` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `tag`
 --
@@ -136,10 +150,10 @@ ALTER TABLE `assoc`
   ADD CONSTRAINT `tag_item` FOREIGN KEY (`ID_tag`) REFERENCES `tag` (`ID_tag`);
 
 --
--- Contraintes pour la table `room`
+-- Contraintes pour la table `item`
 --
-ALTER TABLE `room`
-  ADD CONSTRAINT `item` FOREIGN KEY (`ID_room`) REFERENCES `item` (`ID_room`) ON DELETE CASCADE;
+ALTER TABLE `item`
+  ADD CONSTRAINT `room` FOREIGN KEY (`ID_room`) REFERENCES `room` (`ID_room`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
