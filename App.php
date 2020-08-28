@@ -4,25 +4,49 @@ require_once 'Model.php';
 
 class App extends Model
 {
-
+    /**
+     * Retourne les items dans la room sans les tags
+     *
+     * @param integer $roomId
+     * @return array
+     */
     public function itemsRoom($roomId)
     {
-        return $this->getItemsByRoomId($roomId);
+        return $this->m_getItemsByRoomId($roomId);
     }
 
+    /**
+     * Retourne les tags d'un item
+     *
+     * @param integer $itemId
+     * @return array
+     */
     public function itemTag($itemId)
     {
-        return $this->getTagsByItemId($itemId);
+        return $this->m_getTagsByItemId($itemId);
     }
 
-    public function room($roomName)
+    /**
+     * Retourne une Room par son nom
+     *
+     * @param string $roomName
+     * @return mixed
+     */
+    public function getRoom($roomName)
     {
-        return $this->getRoomByName($roomName);
+        return $this->m_getRoomByName($roomName);
     }
 
+    /**
+     * Vérifie le mot de passe de la Room
+     *
+     * @param string $password
+     * @param integer $roomId
+     * @return bool
+     */
     public function passwordVerify($password, $roomId)
     {
-        $dataPass = $this->getPassByRoomId($roomId);
+        $dataPass = $this->m_getPassByRoomId($roomId);
         
         if(password_verify($password, $dataPass->password)){
             return true;
@@ -31,10 +55,16 @@ class App extends Model
         }
     }
 
-    public function ItemsWithTagsRoom($roomId)
+    /**
+     * Retourne un tableau d'items avec leurs tags
+     *
+     * @param integer $roomId
+     * @return array
+     */
+    public function itemsWithTagsRoom($roomId)
     {
         $itemsWithTags = [];
-        $items = $this->getItemsWithTagsByRoomId($roomId);
+        $items = $this->m_getItemsWithTagsByRoomId($roomId);
 
         foreach ($items as $item) {
             if (!isset($itemsWithTags[$item->ID_item])){
@@ -50,14 +80,27 @@ class App extends Model
         return $itemsWithTags;
     }
 
+    /**
+     * Ajoute un item dans une room
+     *
+     * @param integer $roomId
+     * @param string $itemContent
+     * @return bool
+     */
     public function addItem($roomId,$itemContent)
     {
-        return $this->addItemContent($roomId,$itemContent);
+        return $this->m_addItem($roomId,$itemContent);
     }
 
-    public function addRomm($roomName,$password)
+    /**
+     * Ajouter une nouvelle Room
+     *
+     * @param string $roomName
+     * @param string $password
+     */
+    public function addRoom($roomName,$password)
     {
         $roomPassword = password_hash($password, PASSWORD_DEFAULT);
-        $this->addRoomNamePass($roomName,$roomPassword);
+        return $this->m_addRoom($roomName, $roomPassword);
     }
 }

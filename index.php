@@ -1,12 +1,21 @@
 <?php
     if(!empty($_POST) && isset($_POST["roomName"]) && isset($_POST["roomPassword"])){
-        $roomName = $_POST["roomName"];
-        $roomPassword = $_POST["roomPassword"];
-
+        require_once 'Utils.php';
         require_once 'App.php';
 
+        $roomName = Utils::secureString($_POST["roomName"]);
+        $roomPassword = Utils::secureString($_POST["roomPassword"]);
+
         $appClass = new App;
-        $appClass->addRomm($roomName,$roomPassword);
+        if ($appClass->addRoom($roomName, $roomPassword)) {
+            // Room posté en BDD
+            // redirection
+            header('Location: room.php?name=' . $roomName);
+            die();
+        } else {
+            // Room non posté en BDD
+        }
+
     }
 ?>
 <!doctype html>

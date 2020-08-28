@@ -2,6 +2,12 @@
 
 class Utils
 {
+    /**
+     * Formate une URL et retourne ses paramètres
+     *
+     * @param string $queries
+     * @return array
+     */
     static public function parseUrl($queries)
     {
         $output = [];
@@ -14,6 +20,12 @@ class Utils
         return $output;
     }
 
+    /**
+     * Affiche un message d'erreur
+     *
+     * @param string $str
+     * @param bool $die
+     */
     static public function printError(string $str, bool $die = true)
     {
         if ($die) {
@@ -22,6 +34,12 @@ class Utils
         echo $str;
     }
 
+    /**
+     * Formate une date et retourne celle-ci en français
+     *
+     * @param string $date
+     * @return string
+     */
     static public function parseDate(string $date)
     {
         setlocale (LC_TIME, 'fr_FR.utf8','fra');
@@ -30,6 +48,13 @@ class Utils
         return strftime("%d %B %Y", $strDate);
     }
 
+    /**
+     * Sécurise une chaine de caractère
+     *
+     * @param string $str
+     * @param bool $replace
+     * @return string
+     */
     static public function secureString($str, $replace = true)
     {
         if ($replace) {
@@ -38,6 +63,13 @@ class Utils
         return htmlspecialchars(strip_tags($str), ENT_QUOTES, 'UTF-8');
     }
 
+    /**
+     * Retourne un tableau de tags à partir d'une chaine de caractères
+     *
+     * @param string $str
+     * @param string $charDelimiter
+     * @return array|false
+     */
     static public function getTags($str, $charDelimiter = '#')
     {
         if (strpos($str, $charDelimiter) == false) return false;
