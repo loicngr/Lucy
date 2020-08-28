@@ -21,3 +21,6 @@ $roomId = (int)$room->ID_room;
 $items = $appClass->itemsRoom($roomId);
 
 var_dump(Utils::getTags($items[0]->content));
+
+$url = $appClass->verifUrl($_GET["name"]);
+var_dump($url);

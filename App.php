@@ -103,4 +103,12 @@ class App extends Model
         $roomPassword = password_hash($password, PASSWORD_DEFAULT);
         return $this->m_addRoom($roomName, $roomPassword);
     }
+
+    public function verifUrl($roomName)
+    {
+        $verif = $this->getRoomByName($roomName);
+        if(!empty($verif)){
+            return true;
+        }
+    }
 }
