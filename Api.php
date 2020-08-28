@@ -37,7 +37,11 @@ if (empty($_POST)) {
             $itemID = (int)$_POST['itemID'];
 
             $apiClass = new Api();
-            echo json_encode($apiClass->api_deleteItemById($itemID));
+            if ($apiClass->api_deleteItemById($itemID)) {
+                die("true");
+            } else {
+                die("false");
+            }
 
             break;
         }

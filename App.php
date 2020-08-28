@@ -69,6 +69,7 @@ class App extends Model
         foreach ($items as $item) {
             if (!isset($itemsWithTags[$item->ID_item])){
                 $itemsWithTags[$item->ID_item] = [
+                    "id" => $item->ID_item,
                     "tags"=> [],
                     "content"=> $item->content,
                     "date"=> $item->date
@@ -118,8 +119,8 @@ class App extends Model
         return false;
     }
 
-        /**
-     * suprimer un item
+    /**
+     * Supprimer un item
      *
      * @param integer $itemId
      * @return bool

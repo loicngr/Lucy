@@ -145,10 +145,10 @@ class Model
     {
         $roomId = (int)$roomId;
 
-        $sql = "SELECT item.ID_item,content, item.date, tag.tag_name FROM item 
+        $sql = "SELECT item.ID_item, item.content, item.date, tag.tag_name FROM item 
                 INNER JOIN room ON item.ID_room = room.ID_room
-                INNER JOIN assoc ON item.ID_item = assoc.ID_item
-                INNER JOIN tag ON assoc.ID_tag = tag.ID_tag
+                LEFT JOIN assoc ON item.ID_item = assoc.ID_item
+                LEFT JOIN tag ON tag.ID_tag = assoc.ID_tag
                 WHERE room.ID_room = :id";
         $step = $this->_PDO->prepare($sql);
         $step->bindParam(":id",$roomId);
@@ -215,7 +215,7 @@ class Model
     {
         $itemId = (int)$itemId;
 
-        $sql = "DELETE FROM item WHERE :itemId";
+        $sql = "DELETE FROM item WHERE item.ID_item = :itemId";
         $step = $this->_PDO->prepare($sql);
         $step->bindParam(":itemId",$itemId);
         $step->execute();
