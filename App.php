@@ -113,7 +113,8 @@ class App extends Model
      */
     public function roomExist($roomName)
     {
-        if(!empty($this->m_getRoomByName($roomName))){
+        $room = $this->m_getRoomByName($roomName);
+        if(!empty($room)){
             return true;
         }
         return false;

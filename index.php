@@ -1,4 +1,7 @@
 <?php
+
+    $erreurStatus = '';
+
     if(!empty($_POST) && isset($_POST["roomName"]) && isset($_POST["roomPassword"])){
         require_once 'Utils.php';
         require_once 'App.php';
@@ -6,14 +9,28 @@
         $roomName = Utils::secureString($_POST["roomName"]);
         $roomPassword = Utils::secureString($_POST["roomPassword"]);
 
-        $appClass = new App;
-        if ($appClass->addRoom($roomName, $roomPassword)) {
-            // Room posté en BDD
-            // redirection
-            header('Location: room.php?name=' . $roomName);
+        if (strlen($roomName) <= 5) {
+            $erreurStatus = 'room_name_short';
             die();
+        }
+
+        if (strlen($roomPassword) <= 5) {
+            $erreurStatus = 'room_password_short';
+            die();
+        }
+
+        $appClass = new App;
+        if (empty($appClass->roomExist($roomName))) {
+            if ($appClass->addRoom($roomName, $roomPassword)) {
+                header('Location: room.php?name=' . $roomName);
+                die();
+            } else {
+                // Erreur lors de l'ajout en BDD de la room
+                $erreurStatus = 'creation_error';
+            }
         } else {
-            // Room non posté en BDD
+            // Room existe déjà
+            $erreurStatus = 'already_exist';
         }
 
     }
@@ -31,110 +48,19 @@
 
     <title>Lucy - Home</title>
 
-    <style>
-        *, *::after {
-            box-sizing: border-box;
-        }
-        body {
-            width: 100%;
-            height: 100%;
-
-            background-color: beige;
-            margin: 0;
-
-            display: grid;
-            place-content: center;
-        }
-
-        #content {
-            width: 100%;
-            min-height: 100vh;
-            height: auto;
-
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            justify-content: center;
-        }
-
-        button {
-            width: auto;
-            height: auto;
-
-            border: none;
-            cursor: pointer;
-            transition: all .5s ease-in-out;
-            font-weight: bold;
-            font-size: 2rem;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #b1b0b0;
-        }
-        button[data-type="createRoom"] {
-            width: 100px;
-            height: 100px;
-
-            font-size: 50px;
-            color: dodgerblue;
-            border-radius: 50%;
-            background-color: gray;
-        }
-
-        #popup {
-            width: 300px;
-            height: 400px;
-
-            position: fixed;
-            top: calc(50vh - 200px);
-            left: calc(50vw - 150px);
-
-            background-color: gray;
-
-            display: grid;
-            place-content: center;
-        }
-        #popup[data-show="false"] {
-            display: none;
-        }
-        #popup[data-show="true"] {
-            display: grid;
-        }
-        #popup form {
-            width: 100%;
-
-            display: flex;
-            flex-direction: column;
-        }
-        #popup label {
-            margin: 10px 0;
-            color: aliceblue;
-        }
-        #popup input {
-            width: 100%;
-            height: 40px;
-
-            border-radius: 4px;
-        }
-        #popup button {
-            width: 100%;
-            height: 40px;
-
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body data-error="<?= $erreurStatus;?>">
     <div id="content">
         <div id="popup" data-show="false">
             <form action="" enctype="application/x-www-form-urlencoded" method="post">
                 <label for="roomName">
                     Name
-                    <input type="text" id="roomName" name="roomName" placeholder="Room name" required>
+                    <input type="text" id="roomName" name="roomName" placeholder="Room name" minlength="6" required>
                 </label>
                 <label for="roomPassword">
                     Password
-                    <input type="password" id="roomPassword" name="roomPassword" placeholder="Room password" required>
+                    <input type="password" id="roomPassword" name="roomPassword" minlength="6" placeholder="Room password" required>
                 </label>
 
                 <button type="submit">Create</button>
@@ -144,11 +70,33 @@
     </div>
 
     <script>
-        const popupElement = document.getElementById('popup');
-        const buttonCreateRoom = document.querySelector('button[data-type="createRoom"]');
-        buttonCreateRoom.addEventListener('click', (evt) => {
-            popupElement.dataset.show = (popupElement.dataset.show === 'true')? 'false':'true';
-        });
+        function main() {
+            const popupElement = document.getElementById('popup');
+            const buttonCreateRoom = document.querySelector('button[data-type="createRoom"]');
+            buttonCreateRoom.addEventListener('click', (evt) => {
+                popupElement.dataset.show = (popupElement.dataset.show === 'true')? 'false':'true';
+            });
+
+            const errorStatus = document.body.dataset.error;
+            switch (errorStatus) {
+                case 'already_exist':
+                    alert('Room is already created.');
+                    break;
+                case 'creation_error':
+                    alert('An error occurred during room creation.');
+                    break;
+                case 'room_name_short':
+                    alert('Room name is too short. (Minimum length: 6)');
+                    break;
+                case 'room_password_short':
+                    alert('Room password is too short. (Minimum length: 6)');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        main();
     </script>
 </body>
 </html>

@@ -1,0 +1,13 @@
+button[data-type="createItem"] {
+    width: 100px;
+    height: 100px;
+
+    font-size: 50px;
+    color: dodgerblue;
+    border-radius: 50%;
+    background-color: gray;
+
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+}
