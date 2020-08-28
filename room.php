@@ -40,101 +40,10 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
 
     <meta name="description" content="Lucy project">
     <meta name="author" content="Loïc, Kevin">
-
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="item.css">
     <title>Lucy - Home</title>
 
-    <style>
-        *, *::after {
-            box-sizing: border-box;
-        }
-        body {
-            width: 100%;
-            height: 100%;
-
-            background-color: beige;
-            margin: 0;
-
-            display: grid;
-            place-content: center;
-        }
-
-        #content {
-            width: 100%;
-            min-height: 100vh;
-            height: auto;
-
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            justify-content: center;
-        }
-
-        button {
-            width: auto;
-            height: auto;
-
-            border: none;
-            cursor: pointer;
-            transition: all .5s ease-in-out;
-            font-weight: bold;
-            font-size: 2rem;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #b1b0b0;
-        }
-        button[data-type="createRoom"] {
-            width: 100px;
-            height: 100px;
-
-            font-size: 50px;
-            color: dodgerblue;
-            border-radius: 50%;
-            background-color: gray;
-        }
-
-        #popup {
-            width: 300px;
-            height: 400px;
-
-            position: fixed;
-            top: calc(50vh - 200px);
-            left: calc(50vw - 150px);
-
-            background-color: gray;
-
-            display: grid;
-            place-content: center;
-        }
-        #popup[data-show="false"] {
-            display: none;
-        }
-        #popup[data-show="true"] {
-            display: grid;
-        }
-        #popup form {
-            width: 100%;
-
-            display: flex;
-            flex-direction: column;
-        }
-        #popup label {
-            margin: 10px 0;
-            color: aliceblue;
-        }
-        #popup input {
-            width: 100%;
-            height: 40px;
-
-            border-radius: 4px;
-        }
-        #popup button {
-            width: 100%;
-            height: 40px;
-
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
     <div id="content">
@@ -151,13 +60,116 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
                 </form>
             </div>
         <?php endif; ?>
+        <div id="app">
 
-        <script type="module">
-            // importation vuejs
-            // récupération des items
-            // affichage
-        </script>
+            <div class="item" v-for="(item, index) in items">
+                <p>{{ item.content }}</p>
+                <button @click="deleteItem(index)" >X</button>
+                <div class="tags" >
+                    <div class="tag" v-for="tag in item.tags"> #{{tag}} </div>
+                </div>
+            </div>
 
+        </div>
+
+        <?php if ($isLoggedIn): ?> 
+            <script type="module">
+                // importation vuejs
+                // récupération des items
+                // affichage
+                import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.esm.browser.js';
+
+                var vm = new Vue({
+                    el: '#app',
+                    data:{
+                        items: [
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            },
+                            {
+                                content: "https://www.youtube.com/watch?v=q0ig4egxE7g",
+                                tags: [
+                                    "tag1", "tag2"
+                                ],
+                                date: "",
+                                id: ""
+                            }
+                        ]
+                    },
+                    methods: {
+                        deleteItem(i){
+                            this.items.splice(i, 1);
+                        }
+                    },
+
+                    mounted() {
+                        console.log("ok")
+                    },
+                });
+                
+            </script>
+        <?php endif; ?>
     </div>
 </body>
 </html>
