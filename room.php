@@ -23,11 +23,10 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
     $roomId = (int)$room->ID_room; 
 
     if (!$appClass->passwordVerify($roomPassword, $roomId)) {
-        // Room posté en BDD
-        // redirection
         header('Location: index.php');
         die();
     }
+
     $isLoggedIn = true;
 }
 ?>
@@ -139,18 +138,26 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
 </head>
 <body>
     <div id="content">
-        <div id="popup" data-show="<?php echo $isLoggedIn; ?>">
-            <form action="" enctype="application/x-www-form-urlencoded" method="post">
+        <?php if (!$isLoggedIn): ?>
+            <div id="popup" data-show="true">
+                <form action="" enctype="application/x-www-form-urlencoded" method="post">
 
-                <label for="roomPassword">
-                    Password
-                    <input type="password" id="roomPassword" name="roomPassword" placeholder="Room password" required>
-                </label>
+                    <label for="roomPassword">
+                        Password
+                        <input type="password" id="roomPassword" name="roomPassword" placeholder="Room password" required>
+                    </label>
 
-                <button type="submit">ok</button>
-            </form>
-        </div>
+                    <button type="submit">ok</button>
+                </form>
+            </div>
+        <?php endif; ?>
+
+        <script type="module">
+            // importation vuejs
+            // récupération des items
+            // affichage
+        </script>
+
     </div>
-
 </body>
 </html>
