@@ -14,6 +14,7 @@ if(!isset($queries["name"]) || !$appClass->roomExist($_GET["name"])){
 }
 
 $isLoggedIn = false;
+$roomName = "Room";
 $roomId = null;
 
 if(!empty($_POST) && isset($_POST["roomPassword"])){
@@ -43,7 +44,7 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
     <meta name="author" content="Loïc, Kevin">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="item.css">
-    <title>Lucy - Home</title>
+    <title>Lucy - <?= $roomName ?></title>
 
 </head>
 <body data-room-id="<?= $roomId ?>">
@@ -62,21 +63,18 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
             </div>
         <?php endif; ?>
         <?php if ($isLoggedIn): ?>
-            <div id="app">
-
-                <span v-if="Object.keys(items).length">
-                    <div class="item" v-for="(item, index) in items">
-                        <p>{{ item.content }}</p>
-                        <button @click="deleteItem(index)" >X</button>
-                        <div class="tags">
-                            <div class="tag" v-for="tag in item.tags">
-                                <span v-if="tag" >#{{tag}}</span>
-                            </div>
+            <div id="app" style="display: none">
+                <div class="item" v-for="(item, index) in items">
+                    <p>{{ item.content }}</p>
+                    <button @click="deleteItem(index)" >X</button>
+                    <div class="tags">
+                        <div class="tag" v-for="tag in item.tags">
+                            <span v-if="tag" >#{{tag}}</span>
                         </div>
                     </div>
-                </span>
-
+                </div>
             </div>
+
             <script type="module">
                 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.esm.browser.js';
 
@@ -121,6 +119,7 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
                         }
                     },
                     mounted() {
+                        document.getElementById('app').style.display = 'flex';
                         this.api_getItems();
                     }
                 });
