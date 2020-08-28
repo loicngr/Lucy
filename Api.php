@@ -32,7 +32,7 @@ if (empty($_POST)) {
 
             break;
         }
-        case 'removeItemById': {
+        case 'deleteItemById': {
             if (!isset($_POST['itemID'])) die("false");
             $itemID = (int)$_POST['itemID'];
 
