@@ -104,11 +104,17 @@ class App extends Model
         return $this->m_addRoom($roomName, $roomPassword);
     }
 
-    public function verifUrl($roomName)
+    /**
+     * Vérifie le nom de la room
+     *
+     * @param string $roomName
+     * @return bool
+     */
+    public function roomExist($roomName)
     {
-        $verif = $this->getRoomByName($roomName);
-        if(!empty($verif)){
+        if(!empty($this->m_getRoomByName($roomName))){
             return true;
         }
+        return false;
     }
 }

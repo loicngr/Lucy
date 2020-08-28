@@ -14,7 +14,7 @@ require_once "App.php";
 
 $appClass = new App;
 
-$room = $appClass->room(Utils::secureString($queries["name"]));
+$room = $appClass->getRoom(Utils::secureString($queries["name"]));
 
 $roomId = (int)$room->ID_room;
 
@@ -22,5 +22,5 @@ $items = $appClass->itemsRoom($roomId);
 
 var_dump(Utils::getTags($items[0]->content));
 
-$url = $appClass->verifUrl($_GET["name"]);
+$url = $appClass->roomExist($_GET["name"]);
 var_dump($url);
