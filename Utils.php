@@ -47,7 +47,7 @@ class Utils
 
         foreach ($strSplit as $word) {
             if (strpos($word, $charDelimiter) !== false) {
-                $tags[] = $word;
+                $tags[] = substr(trim($word),1);
             }
         }
 
