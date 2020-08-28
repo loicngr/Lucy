@@ -204,4 +204,25 @@ class Model
         if ($isValid) return true;
         return false;
     }
+
+        /**
+     * suprimer un item
+     *
+     * @param string $itemId
+     * @return bool
+     */
+    protected function m_deleteItemById($itemId)
+    {
+        $itemId = (int)$itemId;
+
+        $sql = "DELETE FROM item WHERE :itemId";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":itemId",$itemId);
+        $step->execute();
+
+        $isValid = $step->rowCount();
+
+        if ($isValid) return true;
+        return false;
+    }
 }

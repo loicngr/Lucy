@@ -117,4 +117,15 @@ class App extends Model
         }
         return false;
     }
+
+        /**
+     * suprimer un item
+     *
+     * @param integer $itemId
+     * @return bool
+     */
+    public function deleteItemById($itemId)
+    {
+        return $this->m_deleteItemById($itemId);
+    }
 }

@@ -1,0 +1,49 @@
+#app{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.item{
+    width: 200px;
+    min-height: 200px;
+
+    background-color: silver;
+    margin: 5px;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.item:hover{
+    background-color: slategray;
+}
+
+.item.tag:hover{
+    background-color: gray;
+}
+
+.item button{
+    font-size: 1rem;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.tags{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tags .tag{
+    padding: 0 5px;
+    margin: 0 5px;
+    background-color: slategray;
+    border-radius: 5px;
+}
