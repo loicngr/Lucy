@@ -136,6 +136,62 @@ class Model
     }
 
     /**
+     * @param string $tagName
+     * @return bool
+     */
+    protected function m_getTagIdByName($tagName)
+    {
+        $tagName = Utils::secureString($tagName);
+
+        $sql = "SELECT ID_tag FROM tag WHERE tag.tag_name = :tag";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":tag",$tagName);
+        $step->execute();
+
+        return $step->fetch();
+    }
+
+    /**
+     * @param integer $tagId
+     * @return mixed
+     */
+    protected function m_getTagNameById($tagId)
+    {
+        $tagId = (int)$tagId;
+
+        $sql = "SELECT tag_name FROM tag WHERE tag.ID_tag = :id";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":id",$tagId);
+        $step->execute();
+
+        return $step->fetch();
+    }
+
+    /**
+     * Ajoute un élément dans la table Assoc
+     *
+     * @param integer $itemId
+     * @param integer $tagId
+     * @return bool
+     */
+    protected function m_addAssocItemTag($itemId, $tagId)
+    {
+        $itemId = (int)$itemId;
+        $tagId = (int)$tagId;
+
+        $sql = "INSERT INTO assoc(ID_item, ID_tag) VALUES (:itemId, :tagId)";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":itemId",$itemId);
+        $step->bindParam(":tagId",$tagId);
+        $step->execute();
+
+        $isValid = $step->rowCount();
+
+        if ($isValid) return true;
+        return false;
+    }
+
+    /**
      * Retourne les items avec leurs tags dans une room
      *
      * @param integer $roomId
@@ -177,7 +233,28 @@ class Model
 
         $isValid = $step->rowCount();
 
-        if ($isValid) return true;
+        if ($isValid) return (int)$this->_PDO->lastInsertId();
+        return false;
+    }
+
+    /**
+     * Ajoute un tag
+     *
+     * @param string $tagName
+     * @return bool
+     */
+    protected function m_addTag($tagName)
+    {
+        $tagName = Utils::secureString($tagName);
+
+        $sql = "INSERT INTO tag(tag_name) VALUES (:tag)";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":tag",$tagName);
+        $step->execute();
+
+        $isValid = $step->rowCount();
+
+        if ($isValid) return (int)$this->_PDO->lastInsertId();
         return false;
     }
 
@@ -205,8 +282,8 @@ class Model
         return false;
     }
 
-        /**
-     * suprimer un item
+    /**
+     * Supprime un item
      *
      * @param string $itemId
      * @return bool

@@ -88,9 +88,31 @@ class App extends Model
      * @param string $itemContent
      * @return bool
      */
-    public function addItem($roomId,$itemContent)
+    public function addItem($roomId, $itemContent)
     {
-        return $this->m_addItem($roomId,$itemContent);
+        // TODO: supprimer les tags dans le content avant de l'envoyer en bdd
+        $itemID = $this->m_addItem($roomId, $itemContent);
+        if (!$itemID) Utils::printError("Impossible d'ajouter l'item");
+
+        $tagsContent = Utils::getTags($itemContent);
+        if (!empty($tagsContent))
+        {
+            foreach ($tagsContent as $tag)
+            {
+                $isTagExist = $this->m_getTagIdByName($tag);
+                $tagId = null;
+
+                if (!$isTagExist) {
+                    $tagId = $this->m_addTag($tag);
+                } else {
+                    $tagId = (int)$isTagExist->ID_tag;
+                }
+
+                if (!$this->m_addAssocItemTag($itemID, $tagId)) Utils::printError("Impossible d'ajouter la relation.");
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -98,6 +120,7 @@ class App extends Model
      *
      * @param string $roomName
      * @param string $password
+     * @return bool
      */
     public function addRoom($roomName,$password)
     {
