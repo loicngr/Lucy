@@ -60,7 +60,7 @@ class Utils
         if ($replace) {
             $str = preg_replace("/>.*?</s", "><", $str);
         }
-        return htmlspecialchars(strip_tags($str), ENT_QUOTES, 'UTF-8');
+        return htmlspecialchars(strip_tags($str), null, 'UTF-8');
     }
 
     /**
