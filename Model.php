@@ -57,6 +57,30 @@ class Model
         return $step->fetchAll();
     }
 
+        /**
+     * Retourne les items dans une room
+     *
+     * @param integer $roomId
+     * @return array
+     */
+    protected function m_getItemsBytag($roomId,$tagId)
+    {
+        $roomId = (int)$roomId;
+        $tagId = (int)$tagId;
+
+        $sql = "SELECT item.ID_item,content, item.date FROM item 
+                INNER JOIN room ON item.ID_room = room.ID_room
+                INNER JOIN assoc ON assoc.ID_item = item.ID_item
+                INNER JOIN tag ON tag.ID_tag = assoc.ID_tag
+                WHERE room.ID_room = :roomId AND tag.ID_tag = :tagId";
+        $step = $this->_PDO->prepare($sql);
+        $step->bindParam(":roomId",$roomId);
+        $step->bindParam(":tagId",$tagId);
+        $step->execute();
+
+        return $step->fetchAll();
+    }
+
     /**
      * Retourne les tags dans un item
      *
