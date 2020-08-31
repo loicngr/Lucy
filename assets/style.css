@@ -48,12 +48,12 @@ button[data-type="createRoom"] {
 }
 
 #popup {
-    width: 300px;
+    width: 600px;
     height: 400px;
 
     position: fixed;
     top: calc(50vh - 200px);
-    left: calc(50vw - 150px);
+    left: calc(50vw - 300px);
 
     background-color: gray;
 
@@ -95,14 +95,11 @@ button[data-type="createRoom"] {
     right: 5px;
 }
 #popup textarea {
-    min-width: 100%;
-    max-width: 300px;
-    width: 100%;
-
-    min-height: 40px;
-    maw-height: 400px;
-    height: 40px;
+    width: 500px;
+    height: 250px;
     border-radius: 4px;
+    resize: none;
+
 }
 #popup button {
     width: 100%;

@@ -77,14 +77,14 @@ class Utils
         $tags = [];
         $strSplit = explode(' ', $str);
 
-        if (strpos($str, ' ') !== false) {
+        if (!empty($strSplit)) {
             foreach ($strSplit as $word) {
                 if (strpos($word, $charDelimiter) !== false) {
                     $tags[] = substr(trim($word),1);
                 }
             }
         } else {
-            $tags[] = substr($str,1);
+            if($str[0] === $charDelimiter) $tags[] = substr($str,1);
         }
 
 

@@ -43,7 +43,9 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
 
 if(!empty($_POST) && isset($_POST["contentItem"])) {
     $contentItem = Utils::secureString($_POST["contentItem"]);
+    if(strlen($contentItem) >280) return false;
     $appClass->addItem($roomId, $contentItem);
+    // on doit trouvez comment restart POST;
 }
 
 ?>
@@ -109,50 +111,43 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div id="popup" :data-show="popup? 'true':'false'">
+                        <button @click="closePopup()" class="closePopup">X</button>
+                        <form action="" enctype="application/x-www-form-urlencoded" method="post">
+                            <label for="roomName">
+                                Content
+                                {{popupContent.length}}/{{popupMaxContent}}
+                                <textarea :maxlength="popupMaxContent" name="contentItem" v-model="popupContent" id="contentItem" placeholder="Content" minlength="1" required></textarea>
+                            </label>
 
-                <div id="popup" data-show="false">
-                    <button class="closePopup">X</button>
-                    <form action="" enctype="application/x-www-form-urlencoded" method="post">
-                        <label for="roomName">
-                            Content
-                            <textarea name="contentItem" id="contentItem" placeholder="Content" minlength="1" required></textarea>
-                        </label>
-
-                        <button type="submit">Create</button>
-                    </form>
+                            <button type="submit">Create</button>
+                        </form>
+                    </div>
+                    <button @click="openPopup()" data-type="createItem" type="button" aria-label="Create new item">+</button>
                 </div>
-                <button data-type="createItem" type="button" aria-label="Create new item">+</button>
             </div>
 
             <script type="module">
-                function eventButtonNewItem() {
-                    const popupElement = document.getElementById('popup');
-                    const buttonCreateRoom = document.querySelector('button[data-type="createItem"]');
-
-                    buttonCreateRoom.addEventListener('click', (evt) => {
-                        popupElement.dataset.show = (popupElement.dataset.show === 'true')? 'false':'true';
-                    });
-                }
-                function eventButtonClosePopup() {
-                    const popupElement = document.getElementById('popup');
-                    const popupCloseBtnElement = document.querySelector('#popup .closePopup');
-
-                    popupCloseBtnElement.addEventListener('click', (evt) => {
-                        popupElement.dataset.show = 'false';
-                    });
-                }
-                eventButtonNewItem();
-                eventButtonClosePopup();
 
                 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.esm.browser.js';
 
                 var vm = new Vue({
                     el: '#app',
                     data: {
-                        items: {}
+                        popup: false,
+                        items: {},
+                        popupContent: "",
+                        popupMaxContent:280
                     },
                     methods: {
+                        openPopup() {
+                            if(this.popup) this.closePopup();
+                            else this.popup = true;
+                        },
+                        closePopup() {
+                            this.popup = false;
+                        },
+
                         deleteItem(i) {
                             this.api_deleteItem(this.items[i].id);
                             const items = { ...this.items };
@@ -163,7 +158,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                             /**
                              * Requête pour récupérer tous les items de la room dans la BDD
                              */
-                            const roomId = parseInt(document.body.dataset?.roomId);
+                            const roomId = parseInt(document.body.dataset.roomId);
 
                             const formulaire = new FormData();
                             formulaire.append('type', 'getItemsByRoomId');
