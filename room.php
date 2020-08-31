@@ -45,9 +45,8 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
     $contentItem = Utils::secureString($_POST["contentItem"]);
     if(strlen($contentItem) >280) return false;
     $appClass->addItem($roomId, $contentItem);
-    // on doit trouvez comment restart POST;
+    header('Location: '.$_SERVER['REQUEST_URI']);
 }
-
 ?>
 <!doctype html>
 <html lang="en">
