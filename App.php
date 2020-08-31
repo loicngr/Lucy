@@ -101,11 +101,11 @@ class App extends Model
      */
     public function addItem($roomId, $itemContent)
     {
-        // TODO: supprimer les tags dans le content avant de l'envoyer en bdd
         $itemID = $this->m_addItem($roomId, $itemContent);
         if (!$itemID) Utils::printError("Impossible d'ajouter l'item");
 
         $tagsContent = Utils::getTags($itemContent);
+
         if (!empty($tagsContent))
         {
             foreach ($tagsContent as $tag)

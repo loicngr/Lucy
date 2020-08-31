@@ -36,7 +36,6 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
         die();
     }
 
-    // TODO: Sauvegarder l'utilisateur en session
     $sessionName = "loggedIn_" . $roomId;
     $isLoggedIn = true;
     $_SESSION[$sessionName] = "true";
@@ -44,9 +43,6 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
 
 if(!empty($_POST) && isset($_POST["contentItem"])) {
     $contentItem = Utils::secureString($_POST["contentItem"]);
-    $contentTags = Utils::getTags($contentItem);
-
-    // TODO: Ajouter les tags dans la BDD
     $appClass->addItem($roomId, $contentItem);
 }
 
@@ -116,6 +112,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                 </div>
 
                 <div id="popup" data-show="false">
+                    <button class="closePopup">X</button>
                     <form action="" enctype="application/x-www-form-urlencoded" method="post">
                         <label for="roomName">
                             Content
@@ -137,7 +134,16 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                         popupElement.dataset.show = (popupElement.dataset.show === 'true')? 'false':'true';
                     });
                 }
+                function eventButtonClosePopup() {
+                    const popupElement = document.getElementById('popup');
+                    const popupCloseBtnElement = document.querySelector('#popup .closePopup');
+
+                    popupCloseBtnElement.addEventListener('click', (evt) => {
+                        popupElement.dataset.show = 'false';
+                    });
+                }
                 eventButtonNewItem();
+                eventButtonClosePopup();
 
                 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.esm.browser.js';
 

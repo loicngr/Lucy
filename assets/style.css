@@ -84,6 +84,16 @@ button[data-type="createRoom"] {
 
     border-radius: 4px;
 }
+#popup .closePopup {
+    width: auto;
+    height: auto;
+
+    font-size: 15px;
+
+    position: absolute;
+    top: 0px;
+    right: 5px;
+}
 #popup textarea {
     min-width: 100%;
     max-width: 300px;

@@ -72,16 +72,21 @@ class Utils
      */
     static public function getTags($str, $charDelimiter = '#')
     {
-        if (strpos($str, $charDelimiter) == false) return false;
+        if ($str[0] !== $charDelimiter && strpos($str, $charDelimiter) === FALSE) return false;
 
         $tags = [];
         $strSplit = explode(' ', $str);
 
-        foreach ($strSplit as $word) {
-            if (strpos($word, $charDelimiter) !== false) {
-                $tags[] = substr(trim($word),1);
+        if (strpos($str, ' ') !== false) {
+            foreach ($strSplit as $word) {
+                if (strpos($word, $charDelimiter) !== false) {
+                    $tags[] = substr(trim($word),1);
+                }
             }
+        } else {
+            $tags[] = substr($str,1);
         }
+
 
         return $tags;
     }
