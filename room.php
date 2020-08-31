@@ -6,6 +6,12 @@ require_once "Utils.php";
 require_once "App.php";
 $appClass = new App;
 
+/**
+ * Initialisation de la session
+ */
+$appClass->setSession();
+$appClass->_SESSION->init();
+
 $queries = Utils::parseUrl($URL_QUERIES);
 
 if(!isset($queries["name"]) || !$appClass->roomExist($_GET["name"])){
@@ -18,6 +24,10 @@ $roomName = Utils::secureString($_GET["name"]);
 $room = $appClass->getRoom($roomName);
 $roomId = (int)$room->ID_room;
 
+if ($appClass->_SESSION->valid($roomId)) {
+    $isLoggedIn = true;
+}
+
 if(!empty($_POST) && isset($_POST["roomPassword"])){
     $roomPassword = Utils::secureString($_POST["roomPassword"]);
 
@@ -27,7 +37,9 @@ if(!empty($_POST) && isset($_POST["roomPassword"])){
     }
 
     // TODO: Sauvegarder l'utilisateur en session
+    $sessionName = "loggedIn_" . $roomId;
     $isLoggedIn = true;
+    $_SESSION[$sessionName] = "true";
 }
 
 if(!empty($_POST) && isset($_POST["contentItem"])) {
@@ -37,6 +49,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
     // TODO: Ajouter les tags dans la BDD
     $appClass->addItem($roomId, $contentItem);
 }
+
 ?>
 <!doctype html>
 <html lang="en">

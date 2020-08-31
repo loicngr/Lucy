@@ -1,9 +1,20 @@
 <?php
 
 require_once 'Model.php';
+require_once 'includes/Session.php';
 
 class App extends Model
 {
+    /**
+     * @var Session $_SESSION
+     */
+    public $_SESSION;
+
+    public function setSession()
+    {
+        $this->_SESSION = new Session();
+    }
+
     /**
      * Retourne les items dans la room sans les tags
      *
