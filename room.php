@@ -128,7 +128,6 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
             </div>
 
             <script type="module">
-
                 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.esm.browser.js';
 
                 var vm = new Vue({
@@ -137,7 +136,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                         popup: false,
                         items: {},
                         popupContent: "",
-                        popupMaxContent:280
+                        popupMaxContent: 280
                     },
                     methods: {
                         openPopup() {
