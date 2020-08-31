@@ -164,4 +164,9 @@ class App extends Model
     {
         return $this->m_deleteItemById($itemId);
     }
+
+    public function getItemsByTagInRoom($roomId,$tagId)
+    {
+        return $this->m_getItemsBytag($roomId,$tagId);
+    }
 }
