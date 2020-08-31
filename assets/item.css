@@ -6,10 +6,11 @@
 
 .item{
     width: 200px;
-    min-height: 200px;
+    height: 200px;
 
     background-color: silver;
     margin: 5px;
+    padding: 10px;
     border-radius: 5px;
 
     display: flex;
@@ -46,4 +47,9 @@
     margin: 0 5px;
     background-color: slategray;
     border-radius: 5px;
+}
+
+.item p{
+    overflow-x: hidden;
+    word-break: break-all;
 }
