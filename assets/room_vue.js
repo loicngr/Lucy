@@ -19,15 +19,17 @@ const vm = new Vue({
                 for (const key in items) {
                     const tags = items[key].tags.filter(function(obj) { return obj }); // Remove null elements
 
-                    const indexFoundTag = tags.indexOf(filterKey);
-                    if (indexFoundTag !== -1) {
-                        newItems[key] = {
-                            'id': parseInt(key),
-                            'content': items[key].content,
-                            'date': items[key].date,
-                            'tags': items[key].tags
-                        };
-                    }
+                    tags.forEach((tag, index) => {
+                        if (this.isAnagram(filterKey, tag)) {
+                            newItems[key] = {
+                                'id': parseInt(key),
+                                'content': items[key].content,
+                                'date': items[key].date,
+                                'tags': items[key].tags
+                            };
+                        }
+                    });
+
                 }
                 items = newItems;
             }
@@ -36,6 +38,9 @@ const vm = new Vue({
         }
     },
     methods: {
+        isAnagram(str1, str2) {
+            return (str1.length !== str2.length)? false:(str1.split('').sort().join('') === str2.split('').sort().join(''));
+        },
         openPopup() {
             if(this.popup) this.closePopup();
             else this.popup = true;
