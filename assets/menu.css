@@ -1,0 +1,24 @@
+#BTNmenu {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+  }
+  
+  nav {
+    height: 100vh;
+    width: 200px;
+  
+    position: fixed;
+    right: 0;
+    top: 0;
+  
+    z-index: 10;
+  
+    display: none;
+    background-color: gray;
+  }
+  
+  #BTNmenu:focus + nav {
+    display: flex;
+  }
+  

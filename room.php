@@ -62,6 +62,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
     <title>Lucy - <?= $roomName ?></title>
 
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/menu.css">
 
     <?php
 
@@ -73,6 +74,23 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
     ?>
 </head>
 <body data-room-id="<?= $roomId ?>">
+
+    <?php
+
+        if ($isLoggedIn) {
+            ?>
+            
+            <button id="BTNmenu" >MENU</button>
+            <nav>
+                <ul>
+                    <li>déconnexion</li>
+                </ul>
+            </nav>
+
+            <?php
+        }
+
+    ?>
     <div id="content">
         <?php
             /*
