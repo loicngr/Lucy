@@ -19,6 +19,7 @@
             die();
         }
 
+        $roomName = str_replace(' ', '_', $roomName);
         $appClass = new App;
         if (empty($appClass->roomExist($roomName))) {
             if ($appClass->addRoom($roomName, $roomPassword)) {
