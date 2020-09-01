@@ -102,7 +102,8 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
         ?>
             <div id="content">
                 <div id="app" style="display: none">
-                    <div class="item" v-for="(item, index) in items">
+                    <input id="searchTag" type="text" placeholder="Tag" v-model="activeTag">
+                    <div class="item" v-for="(item, index) in filteredItems">
                         <p>{{ item.content }}</p>
                         <button @click="deleteItem(index)" >X</button>
                         <div class="tags">
@@ -139,73 +140,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                 </div>
             </div>
 
-            <script type="module">
-                import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.esm.browser.js';
-
-                var vm = new Vue({
-                    el: '#app',
-                    data: {
-                        popup: false,
-                        items: {},
-                        popupContent: "",
-                        popupMaxContent: 280
-                    },
-                    methods: {
-                        openPopup() {
-                            if(this.popup) this.closePopup();
-                            else this.popup = true;
-                        },
-                        closePopup() {
-                            this.popup = false;
-                        },
-
-                        deleteItem(i) {
-                            this.api_deleteItem(this.items[i].id);
-                            const items = { ...this.items };
-                            delete items[this.items[i].id];
-                            this.items = items;
-                        },
-                        async api_getItems() {
-                            /**
-                             * Requête pour récupérer tous les items de la room dans la BDD
-                             */
-                            const roomId = parseInt(document.body.dataset.roomId);
-
-                            const formulaire = new FormData();
-                            formulaire.append('type', 'getItemsByRoomId');
-                            formulaire.append('roomID', roomId);
-
-                            const response = await fetch('Api.php', {
-                                method: 'POST',
-                                body: formulaire
-                            });
-
-                            const data = await response.json();
-                            this.items = data;
-                        },
-                        async api_deleteItem(itemId) {
-                            /**
-                             * Requête pour supprimer un item dans la BDD
-                             */
-                            const formulaire = new FormData();
-                            formulaire.append('type', 'deleteItemById');
-                            formulaire.append('itemID', parseInt(itemId));
-
-                            const response = await fetch('Api.php', {
-                                method: 'POST',
-                                body: formulaire
-                            });
-
-                            await response.json();
-                        }
-                    },
-                    mounted() {
-                        document.getElementById('app').style.display = 'flex';
-                        this.api_getItems();
-                    }
-                });
-                
-            </script>
+            <script src="assets/room_vue.js" type="module"></script>
         <?php endif; ?>
     </div>
 </body>

@@ -11,3 +11,10 @@ button[data-type="createItem"] {
     right: 50px;
     bottom: 50px;
 }
+
+#searchTag {
+    width: 100px;
+    height: 40px;
+
+    display: block;
+}
