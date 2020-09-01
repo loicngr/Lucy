@@ -13,8 +13,14 @@ button[data-type="createItem"] {
 }
 
 #searchTag {
-    width: 100px;
     height: 40px;
-
+    margin: 1rem;
+    position: fixed;
+    top: 5px;
+    left: 5px;
     display: block;
+}
+
+#app{
+    flex-direction: column;
 }

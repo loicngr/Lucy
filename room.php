@@ -102,14 +102,17 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
         ?>
             <div id="content">
                 <div id="app" style="display: none">
-                    <input id="searchTag" type="text" placeholder="Tag" v-model="activeTag">
-                    <div class="item" v-for="(item, index) in filteredItems">
+                    <label id="searchTag"><input type="text" placeholder="Tag" v-model="activeTag"><button @click="activeTag = ''">X</button></label>
+                    <div id="items">
+                        <div class="item" v-for="(item, index) in filteredItems">
                         <p>{{ item.content }}</p>
                         <button @click="deleteItem(index)" >X</button>
                         <div class="tags">
                             <div class="tag" v-for="tag in item.tags">
-                                <span v-if="tag" >#{{tag}}</span>
+                                <span v-if="tag" @click="activeTag = tag" >#{{tag}}</span>
+
                             </div>
+                        </div>
                         </div>
                     </div>
                     <div id="popup" :data-show="popup? 'true':'false'">
