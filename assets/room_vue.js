@@ -16,7 +16,6 @@ const vm = new Vue({
 
             if (filterKey?.length !== 0) {
                 let newItems = {};
-                console.clear();
 
                 for (const key in items) {
                     const tags = items[key].tags.filter(function (tag) {return tag}); // Remove null elements

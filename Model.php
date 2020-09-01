@@ -229,7 +229,7 @@ class Model
                 INNER JOIN room ON item.ID_room = room.ID_room
                 LEFT JOIN assoc ON item.ID_item = assoc.ID_item
                 LEFT JOIN tag ON tag.ID_tag = assoc.ID_tag
-                WHERE room.ID_room = :id";
+                WHERE room.ID_room = :id ORDER BY item.date DESC;";
         $step = $this->_PDO->prepare($sql);
         $step->bindParam(":id",$roomId);
         $step->execute();
