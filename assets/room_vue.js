@@ -16,11 +16,15 @@ const vm = new Vue({
 
             if (filterKey?.length !== 0) {
                 let newItems = {};
-                for (const key in items) {
-                    const tags = items[key].tags.filter(function(obj) { return obj }); // Remove null elements
+                console.clear();
 
-                    tags.forEach((tag, index) => {
-                        if (this.isAnagram(filterKey, tag)) {
+                for (const key in items) {
+                    const tags = items[key].tags.filter(function (tag) {return tag}); // Remove null elements
+
+                    let tagsFound = tags.filter((tag) => tag.search(filterKey) !== -1);
+                    tagsFound.forEach(tag => {
+                        const indexFoundTag = tags.indexOf(tag);
+                        if (indexFoundTag !== -1) {
                             newItems[key] = {
                                 'id': parseInt(key),
                                 'content': items[key].content,
@@ -29,7 +33,6 @@ const vm = new Vue({
                             };
                         }
                     });
-
                 }
                 items = newItems;
             }
