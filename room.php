@@ -74,23 +74,6 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
     ?>
 </head>
 <body data-room-id="<?= $roomId ?>">
-
-    <?php
-
-        if ($isLoggedIn) {
-            ?>
-            
-            <button id="BTNmenu" >MENU</button>
-            <nav>
-                <ul>
-                    <li>déconnexion</li>
-                </ul>
-            </nav>
-
-            <?php
-        }
-
-    ?>
     <div id="content">
         <?php
             /*
@@ -141,6 +124,18 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                         </form>
                     </div>
                     <button @click="openPopup()" data-type="createItem" type="button" aria-label="Create new item">+</button>
+
+                    <!--
+                        Application side menu
+                    -->
+                    <button id="BTNmenu" >MENU</button>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="/logout.php?roomId=<?= $roomId ?>">Logout</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
 

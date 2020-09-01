@@ -31,7 +31,16 @@ class Session
         return (isset($_SESSION[$sessionName]) AND !empty($_SESSION[$sessionName]));
     }
 
-    public function bye()
+    public function bye($roomId)
+    {
+        if (!empty($_SESSION)) {
+            $sessionName = "loggedIn_" . $roomId;
+
+            unset($_SESSION[$sessionName]);
+        }
+    }
+
+    public function byeAll()
     {
         if (!empty($_SESSION)) $_SESSION = [];
         if (isset($_COOKIE[session_name()])) setcookie(session_name(), "", time()-1, "/");
