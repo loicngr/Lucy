@@ -19,7 +19,9 @@ const vm = new Vue({
                 let newItems = {};
 
                 for (const key in items) {
+                    const tags = items[key].tags;
                     let tagsFound = tags.filter((tag) => tag.search(filterKey) !== -1);
+
                     tagsFound.forEach(tag => {
                         const indexFoundTag = tags.indexOf(tag);
                         if (indexFoundTag !== -1) {
