@@ -40,8 +40,10 @@ const vm = new Vue({
         }
     },
     methods: {
-        isAnagram(str1, str2) {
-            return (str1.length !== str2.length)? false:(str1.split('').sort().join('') === str2.split('').sort().join(''));
+        decoRomm() {
+            if (confirm("Voulez vous vraiment vous deconnecté ?")) {
+                window.location.href = "./logout.php"
+            }
         },
         openPopup() {
             if(this.popup) this.closePopup();
@@ -51,10 +53,12 @@ const vm = new Vue({
             this.popup = false;
         },
         deleteItem(i) {
-            this.api_deleteItem(this.items[i].id);
-            const items = { ...this.items };
-            delete items[this.items[i].id];
-            this.items = items;
+            if (confirm("Voulez vous vraiment supprimer cette item ?")) {
+                this.api_deleteItem(this.items[i].id);
+                const items = { ...this.items };
+                delete items[this.items[i].id];
+                this.items = items;
+            }
         },
         async api_getItems() {
             /**

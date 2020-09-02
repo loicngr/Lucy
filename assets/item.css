@@ -47,6 +47,7 @@
     margin: 0 5px;
     background-color: slategray;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .item p{
