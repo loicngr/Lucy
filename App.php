@@ -77,6 +77,14 @@ class App extends Model
         $itemsWithTags = [];
         $items = $this->m_getItemsWithTagsByRoomId($roomId);
 
+        /*
+         * Exemple :
+         *
+         * $indexKey = array(
+         *      "id de l'item" => "index de l'item dans le tableau $itemsWithTags"
+         * );
+         *
+         * */
         $indexKey = [];
 
         foreach ($items as $item) {
@@ -88,7 +96,7 @@ class App extends Model
                     "content"=> $item->content,
                     "date"=> $item->date
                 ]);
-                $indexKey[$item->ID_item] = $elementLength - 1;
+                $indexKey[$item->ID_item] = $elementLength - 1; // -1 Car le tableau commence à 0
             }
 
             $itemIndex = (int)$indexKey[$item->ID_item];
