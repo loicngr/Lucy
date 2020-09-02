@@ -111,9 +111,9 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                         <div class="item" v-for="(item, index) in filteredItems">
                         <p>{{ item.content }}</p>
                         <button @click="deleteItem(index)" >X</button>
-                        <div class="tags">
+                        <div class="tags" v-if="item.tags.length !== 0">
                             <div class="tag" v-for="tag in item.tags">
-                                <span v-if="tag" @click="activeTag = tag" >#{{tag}}</span>
+                                <span @click="activeTag = tag" >#{{tag}}</span>
                             </div>
                         </div>
                         </div>
