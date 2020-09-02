@@ -21,7 +21,8 @@ button[data-type="createItem"] {
     display: block;
 }
 
-button[data-type="clearSearchTag"] {
+button[data-type="clearSearchTag"],
+button[data-type="sortDate"] {
     font-size: 1.2rem !important;
 }
 
