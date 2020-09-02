@@ -77,17 +77,22 @@ class App extends Model
         $itemsWithTags = [];
         $items = $this->m_getItemsWithTagsByRoomId($roomId);
 
+        $indexKey = [];
+
         foreach ($items as $item) {
-            if (!isset($itemsWithTags[$item->ID_item])){
-                $itemsWithTags[$item->ID_item] = [
+            if (!isset($indexKey[$item->ID_item]))
+            {
+                $elementLength = array_push($itemsWithTags, [
                     "id" => $item->ID_item,
                     "tags"=> [],
                     "content"=> $item->content,
                     "date"=> $item->date
-                ];
+                ]);
+                $indexKey[$item->ID_item] = $elementLength - 1;
             }
-            array_push($itemsWithTags[$item->ID_item]["tags"],$item->tag_name);
-            
+
+            $itemIndex = (int)$indexKey[$item->ID_item];
+            array_push($itemsWithTags[$itemIndex]["tags"], $item->tag_name);
         }
         return $itemsWithTags;
     }
