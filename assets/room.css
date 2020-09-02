@@ -21,6 +21,10 @@ button[data-type="createItem"] {
     display: block;
 }
 
+button[data-type="clearSearchTag"] {
+    font-size: 1.2rem !important;
+}
+
 #app{
     flex-direction: column;
 }

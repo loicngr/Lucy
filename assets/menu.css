@@ -18,6 +18,10 @@ nav {
     background-color: gray;
 }
 
+nav ul li a {
+    cursor: pointer;
+}
+
 #BTNmenu:focus + nav,
 #BTNmenu:active + nav,
 nav:hover {
