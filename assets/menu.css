@@ -18,8 +18,20 @@ nav {
     background-color: gray;
 }
 
+
+nav ul {
+    padding: 0 0 0 10px;
+}
+nav ul li {
+    list-style: none;
+}
 nav ul li a {
+    font-size: 1.2rem;
     cursor: pointer;
+    color: aliceblue;
+
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 #BTNmenu:focus + nav,
