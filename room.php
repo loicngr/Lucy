@@ -135,7 +135,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                     <nav>
                         <ul>
                             <li>
-                                <a @click="decoRomm" >Déconnexion</a>
+                                <a @click="decoRoom(<?= $roomId ?>)" >Logout</a>
                             </li>
                         </ul>
                     </nav>
