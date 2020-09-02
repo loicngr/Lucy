@@ -110,7 +110,6 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                         <div class="tags">
                             <div class="tag" v-for="tag in item.tags">
                                 <span v-if="tag" @click="activeTag = tag" >#{{tag}}</span>
-
                             </div>
                         </div>
                         </div>
@@ -136,7 +135,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                     <nav>
                         <ul>
                             <li>
-                                <a href="/logout.php?roomId=<?= $roomId ?>">Logout</a>
+                                <a @click="decoRomm" >Déconnexion</a>
                             </li>
                         </ul>
                     </nav>
