@@ -100,7 +100,7 @@ class App extends Model
             }
 
             $itemIndex = (int)$indexKey[$item->ID_item];
-            array_push($itemsWithTags[$itemIndex]["tags"], $item->tag_name);
+            if (isset($item->tag_name) && !empty($item->tag_name)) array_push($itemsWithTags[$itemIndex]["tags"], $item->tag_name);
         }
         return $itemsWithTags;
     }

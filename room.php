@@ -126,7 +126,6 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                                 {{popupContent.length}}/{{popupMaxContent}}
                                 <textarea :maxlength="popupMaxContent" name="contentItem" v-model="popupContent" id="contentItem" placeholder="Content" minlength="1" required></textarea>
                             </label>
-
                             <button type="submit">Create</button>
                         </form>
                     </div>
