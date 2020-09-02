@@ -55,9 +55,7 @@ const vm = new Vue({
         deleteItem(i) {
             if (confirm("Voulez vous vraiment supprimer cette item ?")) {
                 this.api_deleteItem(this.items[i].id);
-                const items = { ...this.items };
-                delete items[this.items[i].id];
-                this.items = items;
+                this.items.splice(i, 1);
             }
         },
         async api_getItems() {
