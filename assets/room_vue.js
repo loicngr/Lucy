@@ -40,9 +40,9 @@ const vm = new Vue({
         }
     },
     methods: {
-        decoRomm() {
-            if (confirm("Voulez vous vraiment vous deconnecté ?")) {
-                window.location.href = "./logout.php"
+        decoRoom(roomId) {
+            if (confirm("Êtes-vous sûr de vouloir vous déconnecter ?")) {
+                window.location.href = "./logout.php?roomId=" + roomId;
             }
         },
         openPopup() {
