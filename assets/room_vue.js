@@ -4,9 +4,10 @@ const vm = new Vue({
     el: '#app',
     data: {
         popup: false,
-        items: {},
+        items: [],
         activeTag: "",
         popupContent: "",
+        itemsSortDate: '',
         popupMaxContent: 280
     },
     computed: {
@@ -18,8 +19,6 @@ const vm = new Vue({
                 let newItems = {};
 
                 for (const key in items) {
-                    const tags = items[key].tags.filter(function (tag) {return tag}); // Remove null elements
-
                     let tagsFound = tags.filter((tag) => tag.search(filterKey) !== -1);
                     tagsFound.forEach(tag => {
                         const indexFoundTag = tags.indexOf(tag);
@@ -34,6 +33,12 @@ const vm = new Vue({
                     });
                 }
                 items = newItems;
+            }
+
+            if (this.itemsSortDate === 'desc') {
+                items = items.reverse();
+            } else if (this.itemsSortDate === 'asc') {
+                items = items.reverse();
             }
 
             return items;

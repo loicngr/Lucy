@@ -105,6 +105,7 @@ if(!empty($_POST) && isset($_POST["contentItem"])) {
                     <label id="searchTag">
                         <input type="text" placeholder="Tag" v-model="activeTag">
                         <button data-type="clearSearchTag" @click="activeTag = ''">X</button>
+                        <button data-type="sortDate" @click="itemsSortDate = (itemsSortDate === 'asc')? 'desc':'asc'">Filter - Date</button>
                     </label>
                     <div id="items">
                         <div class="item" v-for="(item, index) in filteredItems">
